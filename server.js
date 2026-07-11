@@ -8,6 +8,10 @@ const server = http.createServer((request, response) => {
     response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' })
     response.end('Ошибка: нет данных для перевода')
   }
+  else if(request.method === 'GET' && request.url==='/api'){
+    response.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' })
+    response.end('{"message": "API работает"}')
+  }
   else{
     response.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' })
     response.end('Not Found')
