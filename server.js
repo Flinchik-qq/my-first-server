@@ -6,7 +6,7 @@ const server = http.createServer((request, response) => {
   }
   else if (request.method === 'GET' && request.url==='/'){
     response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' })
-    response.end('hello bro')
+    response.end('hello bro btw')
   }
   else if(request.method === 'POST' && request.url==='/transfer'){
     response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' })
