@@ -4,7 +4,7 @@ const server = http.createServer((request, response) => {
     response.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' })
     response.end('{"account": "flin4ek", "money": 5000}')
   }
-  else if (request.method === 'GET'){
+  else if (request.method === 'GET' && request.url==='/'){
     response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' })
     response.end('hello bro')
   }
