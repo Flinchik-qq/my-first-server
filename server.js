@@ -1,4 +1,5 @@
-const http = require('http'); 
+import 'dotenv/config';
+import http from 'http';
 const server = http.createServer((request, response) => {
   if (request.method === 'GET' && request.url==='/balance'){
     response.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' })
@@ -6,7 +7,7 @@ const server = http.createServer((request, response) => {
   }
   else if (request.method === 'GET' && request.url==='/'){
     response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' })
-    response.end('hello bro btw')
+    response.end('hello denchick btw')
   }
   else if(request.method === 'POST' && request.url==='/transfer'){
     response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' })
@@ -21,8 +22,7 @@ const server = http.createServer((request, response) => {
     response.end('Not Found')
   }
 });
-
-const PORT = 8080;
+const { PORT = 8080 } = process.env;
 server.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
 });
