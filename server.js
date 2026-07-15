@@ -6,7 +6,8 @@ import fs from 'fs/promises';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const htmlPath = path.join(__dirname, 'public', 'index.html');
-console.log("Полный железобетонный путь:", htmlPath);
+const secretPath = path.join(__dirname, 'secret.txt');
+const logPath = path.join(__dirname, 'history.txt');
 const server = http.createServer(async (request, response) => {
   if (request.method === 'GET' && request.url==='/balance'){
     response.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' })
@@ -14,16 +15,37 @@ const server = http.createServer(async (request, response) => {
   }
   else if (request.method === 'GET' && request.url === '/') {
     try {
-      // Ждем, пока fs прочитает файл
       const htmlContent = await fs.readFile(htmlPath, 'utf-8');
-      
-      // Отдаем HTML в браузер
       response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       response.end(htmlContent);
     } catch (error) {
       console.error(error);
       response.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
       response.end('Internal Server Error: не удалось прочитать файл');
+    }
+  }
+  else if(request.method === 'GET' && request.url === '/hack'){
+    try{
+      await fs.writeFile(secretPath,"Your data has been stolen")
+      response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' })
+      response.end('Операция выполнена')
+    }
+    catch (error){
+      console.error(error)
+      response.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' })
+      response.end('Ошибка записи')
+    }
+  }
+  else if(request.method === 'GET' && request.url === '/log'){
+    try{
+      await fs.appendFile(logPath,"Кто-то зашел на сервер!\n")
+      response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' })
+      response.end('Лог записан')
+    }
+    catch (error){
+      console.error(error)
+      response.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' })
+      response.end('Ошибка записи')
     }
   }
   else if(request.method === 'POST' && request.url==='/transfer'){
